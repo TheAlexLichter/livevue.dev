@@ -10,7 +10,7 @@ const params = computed(() => ({
   tag: selectedItem.value === "all" ? undefined : selectedItem.value,
 }));
 
-const { data: results, refresh } = await useFetch("/api/streams", {
+const { data: results, refresh, status } = await useFetch("/api/streams", {
   params,
 });
 
@@ -32,7 +32,9 @@ onMounted(() => {
       orientation="horizontal"
       v-model="selectedItem"
       :items="items"
+      :disabled="status === 'pending'"
     />
+    <!-- TODO: Overlay when loading -->
     <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-8 my-8 px-4 md:px-0">
       <StreamCard v-for="stream in results" :stream />
     </div>
