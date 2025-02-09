@@ -68,7 +68,7 @@ async function fetchStreams(event: H3Event, id?: string) {
   const accessToken = await getAccessToken({ clientId, clientSecret });
 
   let nextCursor: string | undefined = undefined;
-  const streams: Stream[] = [];
+  const streams: Record<string, Stream> = {}
   do {
     const result = await fetchStream({
       id: id!,
@@ -77,11 +77,17 @@ async function fetchStreams(event: H3Event, id?: string) {
       cursor: nextCursor,
     });
 
-    streams.push(...result.data);
+    const streamArrayToObject = result.data.reduce((acc, stream) => {
+      acc[stream.id] = stream;
+      return acc;
+    }, {} as Record<string, Stream>);
+
+    Object.assign(streams, streamArrayToObject);
+
     nextCursor = result.pagination.cursor;
   } while (nextCursor);
 
-  return streams;
+  return Object.values(streams).sort((a, b) => b.viewer_count - a.viewer_count);
 }
 
 type FetchStreamParams = {
