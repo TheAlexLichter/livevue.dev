@@ -18,6 +18,23 @@ const {
   params,
 });
 
+const languages = computed(() => {
+  // TODO: Show list of possible/common languages, but weighted by current streams
+  const langs = results.value?.streams.map((stream) => stream.language) ?? [];
+  return Array.from(new Set(langs));
+});
+
+const pickedLanguages = ref<string[]>([]);
+
+const streamsFilteredByLanguage = computed(() => {
+  if (!pickedLanguages.value.length) {
+    return results.value?.streams;
+  }
+  return results.value?.streams.filter((stream) =>
+    pickedLanguages.value.includes(stream.language)
+  );
+});
+
 // Refresh every minute
 onMounted(() => {
   setInterval(() => {
@@ -30,7 +47,9 @@ onMounted(() => {
   <UApp>
     <div class="p-2 md:p-4 lg:p-8">
       <div class="grid grid-cols-12 justify-center items-center">
-        <div></div>
+        <div>
+          <LanguageDropdown :languages="languages" v-model="pickedLanguages" />
+        </div>
         <div class="text-center col-span-10">
           <h1 class="text-3xl font-bold">LiveVue.dev</h1>
           <h2>Live streams about Vue.js and Nuxt.js</h2>
@@ -50,7 +69,7 @@ onMounted(() => {
       </div>
       <!-- TODO: Overlay when loading -->
       <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-8 my-16">
-        <StreamCard v-for="stream in results" :stream />
+        <StreamCard v-for="stream in streamsFilteredByLanguage" :stream />
       </div>
       <footer class="flex justify-center mt-8">
         <div>

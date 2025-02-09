@@ -35,11 +35,14 @@ export default defineEventHandler(async (event) => {
   const filteredStreams = filterStreams(streams, tagsToFilterFor);
 
 
-  return filteredStreams;
+  return {
+    streams: filteredStreams
+  }
 
   // BONUS:
   // * Filters (e.g. language)
   // * History
+  // * Make sure caching works in Cloudflare
   // * Consider pagination
   // * "Ban / Remove list" -> People that just use tags which don't really describe their stream
   // * Voting System / Favorites
