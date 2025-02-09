@@ -5,12 +5,16 @@ const items = ref([
   { label: "Vue", value: "vue" },
 ]);
 
-const selectedItem = ref("vue");
+const selectedItem = ref("all");
 const params = computed(() => ({
   tag: selectedItem.value === "all" ? undefined : selectedItem.value,
 }));
 
-const { data: results, refresh, status } = await useFetch("/api/streams", {
+const {
+  data: results,
+  refresh,
+  status,
+} = await useFetch("/api/streams", {
   params,
 });
 
@@ -24,19 +28,23 @@ onMounted(() => {
 
 <template>
   <UApp>
-    <h1 class="text-3xl font-bold underline">
-      Some Nuxt/Vue Streamer Overview App ;) (NAME WANTED)
-    </h1>
-    <ColorModeButton />
-    <URadioGroup
-      orientation="horizontal"
-      v-model="selectedItem"
-      :items="items"
-      :disabled="status === 'pending'"
-    />
-    <!-- TODO: Overlay when loading -->
-    <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-8 my-8 px-4 md:px-0">
-      <StreamCard v-for="stream in results" :stream />
+    <div class="p-2 md:p-4 lg:p-8">
+      <h1 class="text-3xl font-bold">
+        LiveVue.dev - Live streams about Vue.js and Nuxt.js
+      </h1>
+      <ColorModeButton />
+      <div class="my-4">
+        <URadioGroup
+        orientation="horizontal"
+        v-model="selectedItem"
+        :items="items"
+        :disabled="status === 'pending'"
+      />
+      </div>
+      <!-- TODO: Overlay when loading -->
+      <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-8 my-8">
+        <StreamCard v-for="stream in results" :stream />
+      </div>
     </div>
   </UApp>
 </template>

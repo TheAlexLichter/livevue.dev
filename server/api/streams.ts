@@ -13,19 +13,33 @@ export default defineEventHandler(async (event) => {
     parse(TAG_SCHEMA, data)
   );
 
+  const ALL_TAGS = [["vue"], ["nuxt"], ["vue.js"], ["nuxt.js"], ["vuejs"], ["nuxtjs"]]
+
   // TODO: Clean up - too redundant
   const tagsToFilterFor = !tag
-    ? [["vue"], ["nuxt"], ["vue.js"], ["nuxt.js"], ["vuejs"], ["nuxtjs"]]
+    ? ALL_TAGS
     : [[tag], [tag + ".js"], [tag + "js"]];
 
-  const streams = await fetchStreams(GAME_IDS.SOFTWARE_AND_GAME_DEVELOPMENT);
+    const fetchCachedStreams = defineCachedFunction(
+    async (_event: H3Event, id?: string) => {
+      const streams = await fetchStreams(id)
+      return filterStreams(streams, ALL_TAGS);
+    }, {
+      staleMaxAge: 60 * 30, // After 30 min, ignore the SWR result and fetch again
+      maxAge: 10,
+      swr: true,
+      name: 'twitch-streams',
+  })
+
+  const streams = await fetchCachedStreams(event, GAME_IDS.SOFTWARE_AND_GAME_DEVELOPMENT);
   const filteredStreams = filterStreams(streams, tagsToFilterFor);
+
+
   return filteredStreams;
 
   // BONUS:
   // * Filters (e.g. language)
   // * History
-  // * Caching / SWR
   // * Consider pagination
   // * "Ban / Remove list" -> People that just use tags which don't really describe their stream
   // * Voting System / Favorites
@@ -33,11 +47,15 @@ export default defineEventHandler(async (event) => {
   // Later on: "Schedule" - either via Twitch OR via submission
 });
 
+/**
+ * @param query - Multi-dimensional array of tags to filter for. First level is OR, second level is AND
+ */
 function filterStreams(streams: Stream[], query: string[][]) {
   return streams.filter((stream) => {
-    let streamTags = stream.tags.map((tag) => tag.toLowerCase());
+    const streamTags = stream.tags.map((tag) => tag.toLowerCase());
+    const streamTitle = stream.title.toLowerCase();
     return query.some((tags) => {
-      return tags.every((tag) => streamTags.includes(tag));
+      return tags.every((tag) => streamTitle.includes(tag) || streamTags.includes(tag));
     });
   });
 }
