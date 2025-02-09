@@ -1,2 +1,9 @@
-@import "tailwindcss";
+/* Don't do `@import "tailwindcss"`, do this instead: */
+/* Change when https://github.com/nuxt/ui/issues/3275 is resolved */
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme" layer(theme) theme(static);
+@import "tailwindcss/preflight" layer(base);
+@import "tailwindcss/utilities" layer(utilities);
+
 @import "@nuxt/ui";
