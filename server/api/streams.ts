@@ -21,8 +21,8 @@ export default defineEventHandler(async (event) => {
     : [[tag], [tag + ".js"], [tag + "js"]];
 
     const fetchCachedStreams = defineCachedFunction(
-    async (_event: H3Event, id?: string) => {
-      const streams = await fetchStreams(id)
+    async (event: H3Event, id?: string) => {
+      const streams = await fetchStreams(event, id)
       return filterStreams(streams, ALL_TAGS);
     }, {
       staleMaxAge: 60 * 30, // After 30 min, ignore the SWR result and fetch again
@@ -62,8 +62,8 @@ function filterStreams(streams: Stream[], query: string[][]) {
   });
 }
 
-async function fetchStreams(id?: string) {
-  const { clientId, clientSecret } = useRuntimeConfig().twitch;
+async function fetchStreams(event: H3Event, id?: string) {
+  const { clientId, clientSecret } = useRuntimeConfig(event).twitch;
 
   const accessToken = await getAccessToken({ clientId, clientSecret });
 

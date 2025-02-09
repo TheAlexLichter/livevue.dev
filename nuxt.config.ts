@@ -13,6 +13,14 @@ export default defineNuxtConfig({
       clientSecret: ''
     }
   },
+  nitro: {
+    storage: {
+      cache: {
+        driver: 'cloudflareKVBinding',
+      }
+    }
+  },
+
   vite: {
     plugins: [tailwind()]
   },
