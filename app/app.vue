@@ -5,9 +5,9 @@ const items = ref([
   { label: "Vue", value: "vue" },
 ]);
 
-const selectedItem = ref("all");
+const selectedTag = ref("all");
 const params = computed(() => ({
-  tag: selectedItem.value === "all" ? undefined : selectedItem.value,
+  tag: selectedTag.value === "all" ? undefined : selectedTag.value,
 }));
 
 const {
@@ -24,14 +24,14 @@ const languages = computed(() => {
   return Array.from(new Set(langs));
 });
 
-const pickedLanguages = ref<string[]>([]);
+const selectedLanguages = ref<string[]>([]);
 
 const streamsFilteredByLanguage = computed(() => {
-  if (!pickedLanguages.value.length) {
+  if (!selectedLanguages.value.length) {
     return results.value?.streams;
   }
   return results.value?.streams.filter((stream) =>
-    pickedLanguages.value.includes(stream.language)
+    selectedLanguages.value.includes(stream.language)
   );
 });
 
@@ -48,7 +48,10 @@ onMounted(() => {
     <div class="p-2 md:p-4 lg:p-8">
       <div class="grid grid-cols-12 justify-center items-center">
         <div>
-          <LanguageDropdown :languages="languages" v-model="pickedLanguages" />
+          <LanguageDropdown
+            :languages="languages"
+            v-model="selectedLanguages"
+          />
         </div>
         <div class="text-center col-span-10">
           <h1 class="text-3xl font-bold">LiveVue.dev</h1>
@@ -62,15 +65,30 @@ onMounted(() => {
         <URadioGroup
           size="xl"
           orientation="horizontal"
-          v-model="selectedItem"
+          v-model="selectedTag"
           :items="items"
           :disabled="status === 'pending'"
         />
       </div>
       <!-- TODO: Overlay when loading -->
-      <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-8 my-16">
+      <div
+        v-if="streamsFilteredByLanguage?.length"
+        class="grid md:grid-cols-2 xl:grid-cols-4 gap-8 my-16"
+      >
         <StreamCard v-for="stream in streamsFilteredByLanguage" :stream />
       </div>
+      <template v-else>
+        <!-- Error State :( -->
+        <StreamEmptyState v-if="results?.streams.length">
+          No streams found for the selected
+          {{ selectedTag !== "all" ? "tags and" : "" }}
+          language{{ selectedLanguages.length > 1 ? "s" : "" }}
+        </StreamEmptyState>
+        <StreamEmptyState v-else-if="selectedTag !== 'all'">
+          No streams found for the selected tag
+        </StreamEmptyState>
+        <StreamEmptyState v-else>No streams found</StreamEmptyState>
+      </template>
       <footer class="flex justify-center mt-8">
         <div>
           Find the code on

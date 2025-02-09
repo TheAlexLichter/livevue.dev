@@ -40,7 +40,6 @@ export default defineEventHandler(async (event) => {
   }
 
   // BONUS:
-  // * Filters (e.g. language)
   // * History
   // * Make sure caching works in Cloudflare
   // * Consider pagination
