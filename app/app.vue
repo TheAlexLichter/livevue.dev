@@ -1,4 +1,11 @@
 <script setup lang="ts">
+useHead({
+  title: 'LiveVue.dev',
+  meta: [
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+  ],
+});
+
 const items = ref([
   { label: "All", value: "all" },
   { label: "Nuxt", value: "nuxt" },
@@ -49,8 +56,8 @@ onMounted(() => {
       <div class="grid grid-cols-12 justify-center items-center">
         <div>
           <LanguageDropdown
-            :languages="languages"
             v-model="selectedLanguages"
+            :languages="languages"
           />
         </div>
         <div class="text-center col-span-10">
@@ -63,9 +70,9 @@ onMounted(() => {
       </div>
       <div class="my-4 mt-8 flex justify-center">
         <URadioGroup
+          v-model="selectedTag"
           size="xl"
           orientation="horizontal"
-          v-model="selectedTag"
           :items="items"
           :disabled="status === 'pending'"
         />
@@ -75,7 +82,7 @@ onMounted(() => {
         v-if="streamsFilteredByLanguage?.length"
         class="grid md:grid-cols-2 xl:grid-cols-4 gap-8 my-16"
       >
-        <StreamCard v-for="stream in streamsFilteredByLanguage" :stream />
+        <StreamCard v-for="(stream, index) in streamsFilteredByLanguage" :key="index" :stream />
       </div>
       <template v-else>
         <!-- Error State :( -->
@@ -89,17 +96,18 @@ onMounted(() => {
         </StreamEmptyState>
         <StreamEmptyState v-else>No streams found</StreamEmptyState>
       </template>
-      <footer class="flex justify-center mt-8">
-        <div>
+      <footer class="flex items-center justify-center mt-8">
+        <span>
           Find the code on
-          <NuxtLink
+        </span>
+        <UButton
+            variant="link"
+            color="neutral"
             target="_blank"
-            href="https://github.com/TheAlexLichter/livevue.dev"
+            to="https://github.com/TheAlexLichter/livevue.dev"
             aria-label="GitHub"
-          >
-            <Icon name="lucide:github" />
-          </NuxtLink>
-        </div>
+            icon="simple-icons:github"
+        />
       </footer>
     </div>
   </UApp>
