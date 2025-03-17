@@ -1,4 +1,4 @@
-import { H3Event, EventHandlerRequest } from "h3";
+import type { H3Event} from "h3";
 import { literal, object, optional, parse, safeParse, union } from "valibot";
 
 const GAME_IDS = {
@@ -143,13 +143,13 @@ async function getAccessToken({
   body.append("grant_type", "client_credentials");
 
   try {
-    const result = await $fetch<any>("https://id.twitch.tv/oauth2/token", {
+    const result = await $fetch<{ access_token: string }>("https://id.twitch.tv/oauth2/token", {
       method: "POST",
       body,
     });
 
     // TODO: Parsing
-    return result.access_token as string;
+    return result.access_token;
   } catch (e) {
     console.log(e);
     throw createError({

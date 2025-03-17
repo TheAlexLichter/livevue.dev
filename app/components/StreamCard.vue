@@ -31,7 +31,10 @@ const thumbnailUrl = computed(() => {
       <h3 class="text-(--ui-text-highlighted) font-bold truncate">{{ stream.title }}</h3>
       <p class="text-(--ui-text-muted) text-sm mt-1">{{ stream.user_name }}</p>
       <div class="flex items-center mt-2">
-        <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+        <span class="relative flex size-2">
+          <span class="absolute bg-red-500 inline-flex size-full animate-ping rounded-full opacity-75" />
+          <span class="relative bg-red-500 inline-flex size-2 scale-90 rounded-full" />
+        </span>
         <span class="text-(--ui-text-muted) text-sm ml-2">{{ stream.viewer_count }} viewers</span>
       </div>
     </div>
