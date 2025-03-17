@@ -1,5 +1,3 @@
-import tailwind from "@tailwindcss/vite";
-
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
@@ -19,10 +17,6 @@ export default defineNuxtConfig({
         driver: 'cloudflareKVBinding',
       }
     }
-  },
-
-  vite: {
-    plugins: [tailwind()]
   },
   css: ['~/assets/main.css']
 })
