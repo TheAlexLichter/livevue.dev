@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@nuxt/ui':
         specifier: ^4.0.0
-        version: 4.1.0(@babel/parser@7.28.5)(change-case@5.4.4)(db0@0.3.4)(embla-carousel@8.6.0)(ioredis@5.8.2)(magicast@0.5.1)(typescript@5.7.3)(valibot@1.0.0-beta.14(typescript@5.7.3))(vite@7.2.2(@types/node@22.13.1)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.38.1)(yaml@2.8.1))(vue-router@4.6.3(vue@3.5.24(typescript@5.7.3)))(vue@3.5.24(typescript@5.7.3))(zod@4.1.12)
+        version: 4.1.0(@babel/parser@7.28.5)(change-case@5.4.4)(db0@0.3.4)(embla-carousel@8.6.0)(ioredis@5.8.2)(magicast@0.5.1)(typescript@5.7.3)(valibot@1.1.0(typescript@5.7.3))(vite@7.2.2(@types/node@22.13.1)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.38.1)(yaml@2.8.1))(vue-router@4.6.3(vue@3.5.24(typescript@5.7.3)))(vue@3.5.24(typescript@5.7.3))(zod@4.1.12)
       '@tailwindcss/vite':
         specifier: ^4.0.6
         version: 4.1.17(vite@7.2.2(@types/node@22.13.1)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.38.1)(yaml@2.8.1))
@@ -21,8 +21,8 @@ importers:
         specifier: ^4.0.6
         version: 4.1.17
       valibot:
-        specifier: 1.0.0-beta.14
-        version: 1.0.0-beta.14(typescript@5.7.3)
+        specifier: ^1.0.0
+        version: 1.1.0(typescript@5.7.3)
       vue:
         specifier: latest
         version: 3.5.24(typescript@5.7.3)
@@ -3560,8 +3560,8 @@ packages:
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
-  valibot@1.0.0-beta.14:
-    resolution: {integrity: sha512-tLyV2rE5QL6U29MFy3xt4AqMrn+/HErcp2ZThASnQvPMwfSozjV1uBGKIGiegtZIGjinJqn0SlBdannf18wENA==}
+  valibot@1.1.0:
+    resolution: {integrity: sha512-Nk8lX30Qhu+9txPYTwM0cFlWLdPFsFr6LblzqIySfbZph9+BFsAHsNvHOymEviUepeIW6KFHzpX8TKhbptBXXw==}
     peerDependencies:
       typescript: '>=5'
     peerDependenciesMeta:
@@ -4595,7 +4595,7 @@ snapshots:
       - magicast
       - supports-color
 
-  '@nuxt/ui@4.1.0(@babel/parser@7.28.5)(change-case@5.4.4)(db0@0.3.4)(embla-carousel@8.6.0)(ioredis@5.8.2)(magicast@0.5.1)(typescript@5.7.3)(valibot@1.0.0-beta.14(typescript@5.7.3))(vite@7.2.2(@types/node@22.13.1)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.38.1)(yaml@2.8.1))(vue-router@4.6.3(vue@3.5.24(typescript@5.7.3)))(vue@3.5.24(typescript@5.7.3))(zod@4.1.12)':
+  '@nuxt/ui@4.1.0(@babel/parser@7.28.5)(change-case@5.4.4)(db0@0.3.4)(embla-carousel@8.6.0)(ioredis@5.8.2)(magicast@0.5.1)(typescript@5.7.3)(valibot@1.1.0(typescript@5.7.3))(vite@7.2.2(@types/node@22.13.1)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.38.1)(yaml@2.8.1))(vue-router@4.6.3(vue@3.5.24(typescript@5.7.3)))(vue@3.5.24(typescript@5.7.3))(zod@4.1.12)':
     dependencies:
       '@ai-sdk/vue': 2.0.93(vue@3.5.24(typescript@5.7.3))(zod@4.1.12)
       '@iconify/vue': 5.0.0(vue@3.5.24(typescript@5.7.3))
@@ -4645,7 +4645,7 @@ snapshots:
       vaul-vue: 0.4.1(reka-ui@2.6.0(typescript@5.7.3)(vue@3.5.24(typescript@5.7.3)))(vue@3.5.24(typescript@5.7.3))
       vue-component-type-helpers: 3.1.3
     optionalDependencies:
-      valibot: 1.0.0-beta.14(typescript@5.7.3)
+      valibot: 1.1.0(typescript@5.7.3)
       vue-router: 4.6.3(vue@3.5.24(typescript@5.7.3))
       zod: 4.1.12
     transitivePeerDependencies:
@@ -7787,7 +7787,7 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  valibot@1.0.0-beta.14(typescript@5.7.3):
+  valibot@1.1.0(typescript@5.7.3):
     optionalDependencies:
       typescript: 5.7.3
 
