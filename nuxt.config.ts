@@ -19,6 +19,7 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    // @ts-expect-error Plugin Types?
     plugins: [tailwind()]
   },
   css: ['~/assets/main.css']

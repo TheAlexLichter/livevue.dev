@@ -1,4 +1,4 @@
-import { H3Event, EventHandlerRequest } from "h3";
+import { H3Event } from "h3";
 import { literal, object, optional, parse, safeParse, union } from "valibot";
 
 const GAME_IDS = {
